@@ -151,7 +151,7 @@ class Email:
         try:
             mail.ehlo()
             mail.starttls()
-            mail.login(user='ini.adewumi@gmail.com', password=str(self.password))
+            mail.login(user=[EMAIL ADDRESS], password=str(self.password))
             mail.sendmail(from_addr=self.sender_email, to_addrs=self.recipients, msg=msg.as_string())
         except smtplib.SMTPAuthenticationError as e:
             print("Error:", e)

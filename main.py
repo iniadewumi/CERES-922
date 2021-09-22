@@ -10,7 +10,7 @@ class Report:
             with open('secret.txt', 'r') as f:
                 #If file is used, make sure to hash password and email!!!!!!!!!
                 self.email = f.readline()
-                self.email = 'ini.adewumi@gmail.com'
+                self.email = [EMAIL ADDRESS]
                 self.password = f.readline()
                 UserWarning("This is a risky method, consider inputs only or Hashing")
         except:
