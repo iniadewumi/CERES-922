@@ -1,7 +1,7 @@
 from OilReport import Investing, OilPrice, CMEGroup
 from pandas import read_csv, DataFrame
 import getpass, os
-import pathlib
+import pathlib, requests
 
 
 fullpath = pathlib.Path().parent.resolve()
@@ -58,6 +58,7 @@ class Report:
         <div class="textDiv"><a href="{out_article['link']}" title={out_article['title']}" class="title">{out_article['title']}</a><span style="line-height:20px;" class="articleDetails"><span style="line-height:20px;"><br>Source: {out_article['source']}</span><span style="line-height:20px;" class="date"><br>Published: {out_article['time']}</span></span>
         <p style="line-height: 16px;">{out_article['by']}<br>{out_article['news_text']}</p>
         </div>
+        <h2 style="text-align: left; padding-left: 5px; padding-top:20px; border-top:2px ridge rgba(23, 23, 95, 0.411);"></h2>
         </td>
         <div class="clear"></div>
         </td></tr>
@@ -69,26 +70,27 @@ class Report:
         <div class="textDiv"><a href="{out_article['link']}" title={out_article['title']}" class="title">{out_article['title']}</a><span style="line-height:20px;" class="articleDetails"><span style="line-height:20px;"><br>Source: {out_article['source']}</span><span style="line-height:20px;" class="date"><br>Published: {out_article['time']}</span></span>
         <p style="line-height: 16px;">{out_article['by']}<br>{out_article['news_text']}</p>
         </div>
-        
+        <h2 style="text-align: left; padding-left: 5px; padding-top:20px; border-top:2px ridge rgba(23, 23, 95, 0.411);"></h2>
+
         <div class="clear"></div>
         </td></tr>
         """ for out_article in anals
         ]
 
-        string2 = f"""<h2 style="text-align: left; padding-left: 10px;">Posted Prices</h2> <p style="line-height: 20px; padding-bottom:20px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);">{oil}</p><br>
-        <h2 style="text-align: left; padding-left: 10px; padding-top:20px; border-top:5px ridge rgba(23, 23, 95, 0.411);">General Info</h2>
-        <p style="line-height: 20px; text-align: left; padding-left: 10px; padding-bottom:20px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);">{oil_gen_info}</p>
-        <h2 style="text-align: left; padding-left: 10px;">Technical Indicator Summary</h2><p style="line-height: 20px;text-align: left; padding-left: 10px; padding-bottom:20px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);">{oil_tech_indicator}</p>
+        string2 = f"""<h2 style="text-align: left; padding-left: 5px;">Posted Prices</h2> <p style="line-height: 20px; padding-bottom:20px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);">{oil}</p><br>
+        <h2 style="text-align: left; padding-left: 5px; padding-top:20px; border-top:5px ridge rgba(23, 23, 95, 0.411);">General Info</h2>
+        <p style="line-height: 20px; text-align: left; padding-left: 5px; padding-bottom:20px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);">{oil_gen_info}</p>
+        <h2 style="text-align: left; padding-left: 5px;">Technical Indicator Summary</h2><p style="line-height: 20px;text-align: left; padding-left: 5px; padding-bottom:20px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);">{oil_tech_indicator}</p>
 
           <table cellpadding="0" cellspacing="0" width="100%">
-        <h2 style="text-align: left; padding-left: 10px;">Top Headlines</h2>          
-        <h2 style="text-align: left; padding-left: 10px; padding-top:20px; border-top:2px ridge rgba(23, 23, 95, 0.411);"></h2><article align="center" style=" padding-left:8px; display: table-cell;vertical-align: top;text-align: left;direction: ltr;margin-top:2px;">{oil_headlines[0]}</article><p>&nbsp;</p>
-        <h2 style="text-align: left; padding-left: 10px; padding-top:20px; border-top:2px ridge rgba(23, 23, 95, 0.411);"></h2><article align="center" style=" padding-left:8px; display: table-cell;vertical-align: top;text-align: left;direction: ltr;margin-top:2px;">{oil_headlines[1]}</article><p>&nbsp;</p>
-        <h2 style="text-align: left; padding-left: 10px; padding-top:20px; border-top:2px ridge rgba(23, 23, 95, 0.411);"></h2><article align="center" style=" padding-left:8px; display: table-cell;vertical-align: top;text-align: left;direction: ltr;margin-top:2px;">{oil_headlines[2]}</article><p>&nbsp;</p>
+        <h2 style="text-align: left; padding-left: 5px;">Top Headlines</h2>          
+        {oil_headlines[0]}</article><p>&nbsp;</p>
+        {oil_headlines[1]}</article><p>&nbsp;</p>
+        {oil_headlines[2]}</article><p>&nbsp;</p>
               
           </table>      
-        <p style="line-height: 20px;text-align: left; padding-left: 10px; padding-bottom:20px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);"><br></p>
-        <h2 style="text-align: left; padding-left: 10px;">Top Analysis & Opinion</h2><article align="center" style=" padding-left:8px; border-bottom: 2px solid #404040; padding-bottom:10px; display: table-cell;vertical-align: top;text-align: left;direction: ltr;margin-top:2px;">{oil_anals[0]}</article><p>&nbsp;</p><article align="center" style=" width:100%; padding-left:8px; border-bottom: 2px solid #404040; padding-bottom:10px; display: table-cell;vertical-align: top;text-align: left;direction: ltr;margin-top:2px;">{oil_anals[1]}</article><p>&nbsp;</p><article align="center" style=" padding-left:8px; border-bottom: 2px solid #404040; padding-bottom:10px; display: table-cell;vertical-align: top;text-align: left;direction: ltr;margin-top:2px;">{oil_anals[2]}</article>
+        <p style="line-height: 20px;text-align: left; padding-left: 5px; border-bottom:5px ridge rgba(23, 23, 95, 0.411);"><br></p>
+        <h2 style="text-align: left; padding-left: 2px;">Top Analysis & Opinion</h2>{oil_anals[0]}</article><p>&nbsp;</p>{oil_anals[1]}</article><p>&nbsp;</p>{oil_anals[2]}</article>
         """
         with open("HTML/string1.html") as f1, open("HTML/string3.html") as f2:
             string1 = f1.read()
@@ -96,7 +98,9 @@ class Report:
             message = string1+string2+string3
             self.message = message.replace("\\","").replace("\n", "").replace("\t", "")
             print("Message Compiled!\n")
-        
+        url = f"http://www.iniadewumi.com/projects/ceres/update"        
+        a = requests.get(url, data={"report":report.message})
+
         return
 
     
@@ -104,11 +108,6 @@ report = Report()
 report.html_email()
 from EmailMain import Email 
 email = Email()
-
-with open(f'{fullpath}\\secrets.txt', 'r') as f:
-    #If file is used, make sure to hash password and email!!!!!!!!!
-    report.email = "adewumibencaesar@gmail.com"
-    report.password = "lookinggood99"
 email.sendmail(sender_email=report.email, password=report.password, recipients=report.recipients, subject=report.subject, html=report.message)
 
 
