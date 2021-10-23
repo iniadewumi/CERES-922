@@ -57,9 +57,10 @@ class Email:
         '''
         #clean emojis and symbols from email
         email = self.emoji_pattern.sub(r'', str(email))
-        print(email)
+
         #checks for valid email pattern
         if(re.search(self.regex, email)):
+            print(f"Email valid: {True}")
             return email
             
         raise ValueError(f"Email: {email} {type(email)}\nEmail syntax validation failed!")
@@ -128,7 +129,7 @@ class Email:
 
         '''
         
-        self.sender_email = self.sender_email_validator(sender_email)[0].replace("\n", "").strip()
+        self.sender_email = self.sender_email_validator(sender_email).replace("\n", "").strip()
         self.password = password.strip()
         self.recipients = ", ".join(self.recipients_validator(recipients))
         self.subject = subject
@@ -151,7 +152,7 @@ class Email:
         try:
             mail.ehlo()
             mail.starttls()
-            mail.login(user=[EMAIL ADDRESS], password=str(self.password))
+            mail.login(user=self.sender_email, password=str(self.password))
             mail.sendmail(from_addr=self.sender_email, to_addrs=self.recipients, msg=msg.as_string())
         except smtplib.SMTPAuthenticationError as e:
             print("Error:", e)
