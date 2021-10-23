@@ -1,17 +1,20 @@
 from OilReport import Investing, OilPrice, CMEGroup
 from pandas import read_csv, DataFrame
-import getpass
- 
+import getpass, os
+import pathlib
+
+
+fullpath = pathlib.Path().parent.resolve()
+
 
 class Report:
     def __init__(self):
         print("Initializing...")
         try:
-            with open('secret.txt', 'r') as f:
+            with open(f'{fullpath}\\secrets.txt', 'r') as f:
                 #If file is used, make sure to hash password and email!!!!!!!!!
-                self.email = f.readline()
-                self.email = [EMAIL ADDRESS]
-                self.password = f.readline()
+                self.email = f.readline().replace("\n", "")
+                self.password = f.readline().replace("\n", "")
                 UserWarning("This is a risky method, consider inputs only or Hashing")
         except:
             print("Enter Email Details ")
@@ -92,7 +95,7 @@ class Report:
             string3 = f2.read()
             message = string1+string2+string3
             self.message = message.replace("\\","").replace("\n", "").replace("\t", "")
-            print("Message Compiled!")
+            print("Message Compiled!\n")
         
         return
 
@@ -101,6 +104,11 @@ report = Report()
 report.html_email()
 from EmailMain import Email 
 email = Email()
-email.sendmail(report.email, report.password, report.recipients, report.subject, report.message)
+
+with open(f'{fullpath}\\secrets.txt', 'r') as f:
+    #If file is used, make sure to hash password and email!!!!!!!!!
+    report.email = "adewumibencaesar@gmail.com"
+    report.password = "lookinggood99"
+email.sendmail(sender_email=report.email, password=report.password, recipients=report.recipients, subject=report.subject, html=report.message)
 
 
