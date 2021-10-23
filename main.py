@@ -104,11 +104,6 @@ report = Report()
 report.html_email()
 from EmailMain import Email 
 email = Email()
-
-with open(f'{fullpath}\\secrets.txt', 'r') as f:
-    #If file is used, make sure to hash password and email!!!!!!!!!
-    report.email = "adewumibencaesar@gmail.com"
-    report.password = "lookinggood99"
 email.sendmail(sender_email=report.email, password=report.password, recipients=report.recipients, subject=report.subject, html=report.message)
 
 
