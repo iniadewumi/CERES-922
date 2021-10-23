@@ -1,1 +1,5 @@
 /__pycache__
+main.py
+EmailMain.py
+email_list.csv
+secrets.txt
