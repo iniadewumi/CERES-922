@@ -120,7 +120,7 @@ class Investing:
                 time = source_.split("-")[1].split("\n")[0]
             else:
                 source = source_
-            
+                time=""
         
             link = article[1].getchildren()[0].values()[0]
             title = article[1].getchildren()[0].values()[1]
@@ -231,17 +231,3 @@ class CMEGroup:
         
         return f"Prior Settle:   ${prior}    <br>Open:   ${open_}    <br>Change:   {change}<br>High:   ${high}<br>Low:   ${low}<br>Volume:   {volume}"
 
-
-
-# try:
-#     report()
-#     variables["success"] = True
-# except Exception as e:
-#     print("ERROR 1:", e)
-#     try:
-#         sleep(5)
-#         report()
-#         variables["success"] = True
-#     except Exception as e:
-#         variables["success"] = False
-#         print("\n\nFailed! With error:",  e)
